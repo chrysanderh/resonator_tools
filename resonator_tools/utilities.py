@@ -55,7 +55,7 @@ class plotting(object):
 		FIGURE_HEIGHT_1COL_GR = FIGURE_WIDTH_1COL*2/(1 + np.sqrt(5))
 		FIGURE_HEIGHT_2COL_GR = FIGURE_WIDTH_2COL*2/(1 + np.sqrt(5))
 
-		fig = plt.figure(figsize=(FIGURE_WIDTH_1COL+1.3*FIGURE_HEIGHT_1COL_GR, FIGURE_WIDTH_1COL))
+		fig = plt.figure(figsize=(FIGURE_WIDTH_1COL+1.3*FIGURE_HEIGHT_1COL_GR, FIGURE_WIDTH_1COL), dpi=150)
 		gs = gridspec.GridSpec(2, 2, width_ratios=[2, 1], height_ratios=[1, 1])
         
 		# Create subplots
@@ -83,7 +83,6 @@ class plotting(object):
 		ax3.plot(self.f_data*1e-9,np.angle(self.z_data_raw), color='darkorange', label='Fit')
 		ax3.set_xlabel('Frequency [GHz]')
 		ax3.set_ylabel(r'$arg(S_{21})$ [deg]')
-		ax3.set_xlim([6.45, 6.75])
 		ax3.legend(loc='lower right')
 		plt.show()
 
