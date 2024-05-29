@@ -71,16 +71,17 @@ class plotting(object):
 		ax1.set_ylabel('Im[$S_{21}$]')
 		ax1.legend(loc='upper right')
 
-		# Plot magnitude and phase
+		# Plot magnitude
 		ax2.scatter(self.f_data*1e-9,np.absolute(self.z_data_raw), label='Data', s=0.5)
-		ax2.plot(self.f_data*1e-9,np.absolute(self.z_data_raw), color='darkorange', label='Fit')
+		ax2.plot(self.f_data*1e-9,np.absolute(self.z_data_sim), color='darkorange', label='Fit')
 		ax2.set_ylabel(r'$|S_{21}|$ [ ]')
 		ax2.legend(loc='lower right')
 		for ax in [ax2]:
 			plt.setp(ax.get_xticklabels(), visible=False)	# set x-axis labels invisible
 
+		# Plot phase
 		ax3.scatter(self.f_data*1e-9,np.angle(self.z_data_raw), label='Data', s=0.5)
-		ax3.plot(self.f_data*1e-9,np.angle(self.z_data_raw), color='darkorange', label='Fit')
+		ax3.plot(self.f_data*1e-9,np.angle(self.z_data_sim), color='darkorange', label='Fit')
 		ax3.set_xlabel('Frequency [GHz]')
 		ax3.set_ylabel(r'$arg(S_{21})$ [deg]')
 		ax3.legend(loc='lower right')
