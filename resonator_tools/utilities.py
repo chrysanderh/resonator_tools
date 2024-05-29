@@ -1,6 +1,7 @@
 import warnings
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 
 def Watt2dBm(x):
 	'''
@@ -43,6 +44,50 @@ class plotting(object):
 		plt.legend()
 		plt.show()
 		
+	def plotcombined(self):
+		real = self.z_data_raw.real
+		imag = self.z_data_raw.imag
+		real2 = self.z_data_sim.real
+		imag2 = self.z_data_sim.imag
+
+		FIGURE_WIDTH_1COL = 3.404 
+		FIGURE_WIDTH_2COL = 7.057
+		FIGURE_HEIGHT_1COL_GR = FIGURE_WIDTH_1COL*2/(1 + np.sqrt(5))
+		FIGURE_HEIGHT_2COL_GR = FIGURE_WIDTH_2COL*2/(1 + np.sqrt(5))
+
+		fig = plt.figure(figsize=(FIGURE_WIDTH_1COL+1.3*FIGURE_HEIGHT_1COL_GR, FIGURE_WIDTH_1COL))
+		gs = gridspec.GridSpec(2, 2, width_ratios=[2, 1], height_ratios=[1, 1])
+        
+		# Create subplots
+		ax1 = fig.add_subplot(gs[:, 0])  # Span all rows in the first column
+		ax2 = fig.add_subplot(gs[0, 1])  # First row, second column
+		ax3 = fig.add_subplot(gs[1, 1], sharex=ax2)  # Second row, second column, sharing x-axis with ax2
+		ax1.set_aspect('equal', adjustable='box')
+
+		# Plot real and imaginary parts (the circle)
+		ax1.scatter(real, imag, label='Data', s=0.5)
+		ax1.plot(real2, imag2, color='darkorange', label='Fit')
+		ax1.set_xlabel('Re[$S_{21}$]')
+		ax1.set_ylabel('Im[$S_{21}$]')
+		ax1.legend(loc='upper right')
+
+		# Plot magnitude and phase
+		ax2.scatter(self.f_data*1e-9,np.absolute(self.z_data_raw), label='Data', s=0.5)
+		ax2.plot(self.f_data*1e-9,np.absolute(self.z_data_raw), color='darkorange', label='Fit')
+		ax2.set_ylabel(r'$|S_{21}|$ [ ]')
+		ax2.legend(loc='lower right')
+		for ax in [ax2]:
+			plt.setp(ax.get_xticklabels(), visible=False)	# set x-axis labels invisible
+
+		ax3.scatter(self.f_data*1e-9,np.angle(self.z_data_raw), label='Data', s=0.5)
+		ax3.plot(self.f_data*1e-9,np.angle(self.z_data_raw), color='darkorange', label='Fit')
+		ax3.set_xlabel('Frequency [GHz]')
+		ax3.set_ylabel(r'$arg(S_{21})$ [deg]')
+		ax3.set_xlim([6.45, 6.75])
+		ax3.legend(loc='lower right')
+		plt.show()
+
+
 	def plotcalibrateddata(self):
 		real = self.z_data.real
 		imag = self.z_data.imag
