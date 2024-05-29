@@ -83,7 +83,7 @@ class plotting(object):
 		ax3.scatter(self.f_data*1e-9,np.angle(self.z_data_raw), label='Data', s=0.5)
 		ax3.plot(self.f_data*1e-9,np.angle(self.z_data_sim), color='darkorange', label='Fit')
 		ax3.set_xlabel('Frequency [GHz]')
-		ax3.set_ylabel(r'$arg(S_{21})$ [deg]')
+		ax3.set_ylabel(r'$arg(S_{21})$ [rad]')
 		ax3.legend(loc='lower right')
 		plt.show()
 
